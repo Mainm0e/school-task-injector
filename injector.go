@@ -7,21 +7,28 @@ import (
 )
 
 func mergePrograms(targetBinaryPath, injectorBinaryPath string) error {
+	// Read the target binary
+	targetBinary, err := ioutil.ReadFile(targetBinaryPath)
+	if err != nil {
+		return err
+	}
+
 	// Read the injector binary
 	injectorBinary, err := ioutil.ReadFile(injectorBinaryPath)
 	if err != nil {
 		return err
 	}
 
-	// Open the target binary in append mode
-	targetFile, err := os.OpenFile(targetBinaryPath, os.O_APPEND|os.O_WRONLY, 0644)
-	if err != nil {
-		return err
-	}
-	defer targetFile.Close()
+	// Determine the insertion point in the target binary
+	// For example, you could insert the injector binary at the beginning of the target binary
+	insertionPoint := 0
 
-	// Write the injector binary to the end of the target binary
-	_, err = targetFile.Write(injectorBinary)
+	// Insert the injector binary into the target binary
+	modifiedBinary := append(targetBinary[:insertionPoint], injectorBinary...)
+	modifiedBinary = append(modifiedBinary, targetBinary[insertionPoint:]...)
+
+	// Write the modified target binary back to disk
+	err = ioutil.WriteFile(targetBinaryPath, modifiedBinary, 0644)
 	if err != nil {
 		return err
 	}
