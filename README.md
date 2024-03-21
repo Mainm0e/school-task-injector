@@ -1,11 +1,25 @@
-making py script to exe file with command
-import "pyinstaller"
+# Injector
+
+This program will bind 2 program together
+
+## Instruction
+
+[install Go](https://go.dev/doc/install)
+
+create 2 important files 
 ```
-pip install pyinstaller
+# Mac
+touch important1.exe important2.exe
+
+# Windows
+echo. > important1.exe
+echo. > important2.exe
 ```
-make python scrip to exe 
+
+## Usage
 
 ```
-pyinstaller --onefile <filename>
+go run injector.go <file1> <file1>
 ```
 
+![example](/image/Näyttökuva%202024-03-21%20224630.png)
